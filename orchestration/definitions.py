@@ -21,6 +21,8 @@ from load_jobs import jobads_source
 # data warehouse directory
 DUCKDB_PATH = os.getenv("DUCKDB_PATH")
 DBT_PROFILES_DIR = os.getenv("DBT_PROFILES_DIR")
+#DUCKDB_PATH= str(Path(__file__).parents[1] / 'data_warehouse' / 'job_ads.duckdb')
+#DBT_PROFILES_DIR= Path.home() / '.dbt'
 
 # ==================== #
 #                      #

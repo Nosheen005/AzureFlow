@@ -187,15 +187,15 @@ def layout_ads(df):
 
 
 if page2 == "Bygg och anläggning":
-    df_test = query_job_listings('SELECT * FROM mart_construction')
+    df_test = query_job_listings('SELECT * FROM marts.mart_construction')
     mart = "mart_construction"
     name = "Bygg och anläggning"
 elif page2 == "Data/IT":
-    df_test = query_job_listings('SELECT * FROM mart_it')
+    df_test = query_job_listings('SELECT * FROM marts.mart_it')
     mart = "mart_it"
     name = "Data/IT"
 elif page2 == "Administration, ekonomi, juridik":
-    df_test = query_job_listings('SELECT * FROM mart_economics')
+    df_test = query_job_listings('SELECT * FROM marts.mart_economics')
     mart = "mart_economics"
     name = "Administration, ekonomi, juridik"
 
