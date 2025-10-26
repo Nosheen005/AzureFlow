@@ -6,3 +6,11 @@ services:
     ports:
       - "3000:3000"
     image: containazureflow-dcaud4bze9fhbubd.azurecr.io/pipeline:latest
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dockerfile.dashboard
+    ports:
+      - "8501:8501"
+    image: containazureflow-dcaud4bze9fhbubd.azurecr.io/dashboard:latest
