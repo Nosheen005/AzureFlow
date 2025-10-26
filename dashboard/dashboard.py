@@ -2,7 +2,6 @@ import streamlit as st
 from connect_data_warehouse import query_job_listings
 import altair as alt
 import pandas as pd
-import os
 
 if 'economics_df' not in st.session_state:
     st.session_state['economics_df'] = query_job_listings('SELECT * FROM marts.mart_economics')
