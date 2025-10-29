@@ -13,14 +13,21 @@ resource "azurerm_linux_web_app" "my_web_app" {
     service_plan_id    = azurerm_service_plan.my_service_plan.id
 
     site_config {
-        application_stack {
-          docker_image = "containazureflow.azurecr.io/azureflow-webapp"
-          docker_image_tag = "latest"
-        }
-        app_command_line = ""
-        application_stack_port = 8501
+      application_stack {
+        docker_image_name = "${azurerm_container_registry.containazureflow.login_server}/${var.dashboard_image_name}:${var.dashboard_image_tag}"
+      }
+      
     }
-    app_settings = { 
-    WEBSITES_PORT = "8501"
-   }
+    
+    app_settings = {
+      WEBSITES_ENABLE_APP_SERVICE_STORAGE = "false"
+
+      DASHBOARD_DATA_PATH = "/mnt/${azurerm_storage_share.my_share.name}/"
+
+      AZURE_STORAGE_ACCOUNT_NAME_files = azurerm_storage_account.my_storage.name
+      AZURE_STORAGE_ACCOUNT_KEY_files = azurerm_storage_account.my_storage.primary_access_key
+      AZURE_STORAGE_ACCOUNT_files_SHARE_NAME = azurerm_storage_share.my_share.name
+      AZURE_STORAGE_ACCOUNT_files_TYPE = "AzureFiles"
+      AZURE_STORAGE_ACCOUNT_files_MOUNT_PATH = "/mnt/${azurerm_storage_share.my_share.name}"
+      }
 }
