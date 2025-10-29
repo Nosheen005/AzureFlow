@@ -4,8 +4,10 @@ resource "azurerm_container_group" "dagster" {
   resource_group_name = azurerm_resource_group.azureflow_rg.name
   os_type             = "Linux"
   ip_address_type     = "Public"
-  dns_name_label      = var.dagster_dns_label  # becomes <label>.<region>.azurecontainer.io
+  dns_name_label      = "${var.dagster_dns_label}${random_string.suffix.result}"  # becomes <label>.<region>.azurecontainer.io
   restart_policy      = "Always"
+  depends_on          = [null_resource.push_compose_images]
+
 
   container {
     name   = "dagster"
@@ -19,14 +21,13 @@ resource "azurerm_container_group" "dagster" {
     }
 
     environment_variables = {
-#      DAGSTER_HOME          = "/mnt/${azurerm_storage_share.my_share.name}"
-      DUCKDB_PATH           = "/mnt/${azurerm_storage_share.my_share.name}"
-      DBT_PROFILES_DIR      = "/mnt/${azurerm_storage_share.my_share.name}"
+      DUCKDB_PATH           = "/mnt/${var.file_share_name}/${var.duckdb_file_name}"
+      DBT_PROFILES_DIR      = "/mnt/${var.file_share_name}/.dbt"
     }
 
     volume {
       name       = "dagster-files"
-      mount_path = "/mnt/${azurerm_storage_share.my_share.name}"
+      mount_path = "/mnt/${var.file_share_name}"
       read_only  = false
       share_name = azurerm_storage_share.my_share.name
 
