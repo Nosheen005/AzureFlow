@@ -259,3 +259,4 @@ terraform.rc
 
 .vscode
 **/job_ads.duckdb
+orchestration/.tmp*
