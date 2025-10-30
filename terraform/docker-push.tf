@@ -1,18 +1,12 @@
-data "template_file" "compose" {
-  template = file("${path.module}/../docker-compose.tpl.yml")
-
-  vars = {
-    ACR_LOGIN_SERVER = azurerm_container_registry.containazureflow.login_server
-    DAGSTER_IMAGE_NAME   = var.dagster_image_name
-    DAGSTER_IMAGE_TAG    = var.dagster_image_tag
-    DASHBOARD_IMAGE_NAME = var.dashboard_image_name
-    DASHBOARD_IMAGE_TAG  = var.dashboard_image_tag
-  }
-}
-
 resource "local_file" "rendered_compose" {
   filename = "${path.module}/../docker-compose.yml"
-  content  = data.template_file.compose.rendered
+  content  = templatefile("${path.module}/../docker-compose.tpl.yml", {
+    ACR_LOGIN_SERVER    = azurerm_container_registry.containazureflow.login_server
+    DAGSTER_IMAGE_NAME  = var.dagster_image_name
+    DAGSTER_IMAGE_TAG   = var.dagster_image_tag
+    DASHBOARD_IMAGE_NAME = var.dashboard_image_name
+    DASHBOARD_IMAGE_TAG  = var.dashboard_image_tag
+  })
 }
 
 resource "null_resource" "push_compose_images" {

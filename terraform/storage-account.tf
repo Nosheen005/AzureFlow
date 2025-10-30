@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "my_storage" {
 
 resource "azurerm_storage_share" "my_share" {
   name                 = var.file_share_name
-  storage_account_name = azurerm_storage_account.my_storage.name
+  storage_account_id = azurerm_storage_account.my_storage.id
   quota                = var.file_share_size
 }
 
@@ -23,7 +23,7 @@ resource "null_resource" "wait_for_fileshare" {
   depends_on = [azurerm_storage_share_directory.dbt_profiles_dir]
 
   provisioner "local-exec" {
-    command     = "sleep 15"
+    command     = "sleep 30"
     interpreter = ["bash", "-c"]
   }
 }
@@ -32,16 +32,10 @@ resource "azurerm_storage_share_file" "dbt_profiles" {
   name               = "profiles.yml"
   source             = "${path.module}/profiles.yml"
   storage_share_id   = azurerm_storage_share.my_share.id
-  path               = ".dbt/profiles.yml"
+  path               = ".dbt"
   depends_on         = [
     azurerm_storage_share_directory.dbt_profiles_dir,
     null_resource.wait_for_fileshare
   ]
 }
 
-#resource "azurerm_storage_share_file" "dbt_profiles" {
-#  name             = "profiles.yml"
-#  source           = "${path.module}/profiles.yml"
-#  storage_share_id = azurerm_storage_share.my_share.id
-#  directory_name   = azurerm_storage_share_directory.dbt_profiles_dir.name
-#}

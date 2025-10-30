@@ -24,6 +24,15 @@ resource "azurerm_linux_web_app" "my_web_app" {
 
     }
     
+    storage_account {
+      name         = "fileshare"
+      type         = "AzureFiles"
+      account_name = azurerm_storage_account.my_storage.name
+      share_name   = azurerm_storage_share.my_share.name
+      access_key   = azurerm_storage_account.my_storage.primary_access_key
+      mount_path   = "/mnt/shareazureflow"
+    }
+    
     app_settings = {
 
       WEBSITES_ENABLE_APP_SERVICE_STORAGE = "false"
