@@ -1,7 +1,7 @@
 variable "subscription_id" {
     description = "The Subscription ID for the Azure Account"
-    default = "60ee8cf3-bc5c-4772-a989-e7cebdd74822"
-}
+    default = "your-subscription-id-here"
+    }
 
 #Resource Group Variables
 variable "resource_group_name" {

@@ -1,5 +1,6 @@
 services:
   dwh_pipeline:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: dockerfile.dwh
@@ -8,6 +9,7 @@ services:
     image: ${ACR_LOGIN_SERVER}/${DAGSTER_IMAGE_NAME}:${DAGSTER_IMAGE_TAG}
 
   dashboard:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: dockerfile.dashboard

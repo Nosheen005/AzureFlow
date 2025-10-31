@@ -23,11 +23,6 @@ resource "azurerm_storage_share_directory" "dbt_profiles_dir" {
 
 resource "null_resource" "wait_for_fileshare" {
   depends_on = [azurerm_storage_share_directory.dbt_profiles_dir]
-
-  provisioner "local-exec" {
-    command     = "sleep 30"
-    interpreter = ["bash", "-c"]
-  }
 }
 
 resource "azurerm_storage_share_file" "dbt_profiles" {
