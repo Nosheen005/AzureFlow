@@ -13,5 +13,6 @@ terraform {
 provider "azurerm" {
   features {
   }
+  environment = "public"
   subscription_id = var.subscription_id
 }

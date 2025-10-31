@@ -40,10 +40,10 @@ output "file_share_name" {
 }
 
 # Terraform Outputs for Web App
-output "web_app_url" {
-  value = azurerm_linux_web_app.my_web_app.default_hostname
-  description = "The URL of the deployed web application"
-}
+#output "web_app_url" {
+#  value = azurerm_linux_web_app.my_web_app.default_hostname
+#  description = "The URL of the deployed web application"
+#}
 
 # Terraform Outputs for Dagster ACI
 output "dagster_url" {
